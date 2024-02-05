@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="space-y-8">
     <header
       class="h-[200px] bg-gradient-to-r from-blue-700 to-red-700 pb-16 -mb-12 grid">
       <div class="mt-auto space-y-2">
@@ -19,6 +19,12 @@
     <div class="wrapper">
       <ToDoList :items="todos" @onTodoClick="toggleTodo" />
     </div>
+    <div class="wrapper">
+      <div class="text-center" v-if="doneTodosCount > 0">
+        <div class="text-2xl font-semibold">Congrats!</div> 
+        <div>You've completed {{ doneTodosCount }} {{ doneTodosCount > 1 ? 'todos' : 'todo' }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -30,6 +36,9 @@ export default {
     todos() {
       return this.$store.state.todos;
     },
+    doneTodosCount() {
+      return this.$store.state.todos.filter(todo => todo.completed).length
+    }
   },
   methods: {
     addToDo(event) {
